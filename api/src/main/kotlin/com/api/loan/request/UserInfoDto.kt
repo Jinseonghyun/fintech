@@ -1,6 +1,7 @@
 package com.api.loan.request
 
 import com.domain.domain.UserInfo
+import com.kafka.dto.LoanRequestDto
 
 data class UserInfoDto(
     val userKey: String,
@@ -12,4 +13,6 @@ data class UserInfoDto(
         UserInfo(
             userKey, userRegistrationNumber, userName, userIncomeAmount
         )
+
+    fun toLoanRequestKafkaDto() = LoanRequestDto(userKey, userName, userIncomeAmount, userRegistrationNumber)
 }
