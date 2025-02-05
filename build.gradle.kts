@@ -1,4 +1,6 @@
+import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     kotlin("jvm") version "1.6.0"
@@ -52,6 +54,33 @@ subprojects {
 project(":api") {
     dependencies {
         implementation(project(":domain"))
+        implementation(project(":kafka"))
     }
 }
 
+project(":consumer") {
+    dependencies {
+        implementation(project(":domain"))
+        implementation(project(":kafka"))
+    }
+}
+
+project(":domain") {
+    dependencies {
+        val jar: Jar by tasks
+        val bootJar: BootJar by tasks
+
+        bootJar.enabled = false
+        jar.enabled = true
+    }
+}
+
+project(":kafka") {
+    dependencies {
+        val jar: Jar by tasks
+        val bootJar: BootJar by tasks
+
+        bootJar.enabled = false
+        jar.enabled = true
+    }
+}
